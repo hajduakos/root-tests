@@ -1,9 +1,11 @@
 // Simple structure to hold the data
 struct simple_t {
-   Float_t xVal;
-   Int_t   i;
-   Bool_t  b;
-   Short_t s;
+   Float_t px, py, pz;
+   // When using structures as a single branch, the size of the variables
+   // must be the same (https://root.cern.ch/root/htmldoc/guides/users-guide/Trees.html#adding-a-branch-to-hold-a-list-of-variables)
+   // so the double member must be omitted
+   //Double_t random;
+   Int_t ev;
 };
 
 simple_t simple; // An instance of the structure to generate the data
@@ -17,14 +19,13 @@ void makeSimpleTreeOneBranch(){
    TRandom r; // Random number generator for filling the tree
    
    // One branch will contain each variable
-   tree->Branch("simple", &simple, "xVal/F:i/I:b/O:s/S");
+   tree->Branch("simple", &simple, "px/F:py/F:pz/F:ev/I");
    
    // Fill tree
-   for (Int_t j = 0; j < 100; ++j){
-      simple.xVal = (Float_t)r.Gaus();
-      simple.i    = r.Integer(1000);
-      simple.b    = r.Integer(2);
-      simple.s    = (Short_t)r.Integer(20);
+   for (Int_t i = 0; i < 100; ++i){
+      r.Rannor(simple.px, simple.py);
+      simple.pz = simple.px*simple.px + simple.py*simple.py;
+      simple.ev = i;
       tree->Fill();
    }
    
