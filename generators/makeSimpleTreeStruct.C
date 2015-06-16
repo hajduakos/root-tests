@@ -10,11 +10,11 @@ struct simple_t {
 
 simple_t simple; // An instance of the structure to generate the data
 
-void makeSimpleTreeOneBranch(){
+void makeSimpleTreeStruct(){
    // Create a file for saving the tree
-   TFile f("simpleTreeOneBranch.root", "RECREATE");
+   TFile f("simpleTreeStruct.root", "RECREATE");
    // Create tree
-   TTree tree("SimpleTreeOneBranch", "Simple tree with one branch");
+   TTree tree("SimpleTreeStruct", "Simple tree from a C struct with one branch");
    
    TRandom r; // Random number generator for filling the tree
    
