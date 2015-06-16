@@ -19,4 +19,23 @@ public:
    ClassDef(ClassC, 1);
 };
 
+class ClassB : public TObject {
+private:
+   ClassC  fC;
+   Float_t fPy;
+public:
+   ClassB(Float_t fPx_, Int_t fEv_, Float_t fPy_) : fC(fPx_, fEv_), fPy(fPy_) { }
+   ClassB() : ClassB(0, 0, 0) { }
+   virtual ~ClassB() { }
+   
+   ClassC  GetC() const { return fC; }
+   Float_t GetPy() const { return fPy; }
+   void Set(Float_t fPx_, Int_t fEv_, Float_t fPy_) {
+      fC.Set(fPx_, fEv_);
+      fPy = fPy_;
+   }
+   
+   ClassDef(ClassB, 1);
+};
+
 #endif
