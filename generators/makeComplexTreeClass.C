@@ -1,6 +1,6 @@
 #include "SampleClasses.h"
 
-void makeComplexTreeClass(){
+void makeComplexTreeClass(Int_t splitlevel = 0) {
    // Load class if not available
    // Build SampleClasses.h with the command '.L SampleClasses.h+'
    if (!TClassTable::GetDict("ClassB")) {
@@ -17,7 +17,7 @@ void makeComplexTreeClass(){
    ClassB *classB = new ClassB();
    
    // Create branch for ClassB
-   tree.Branch("ClassB_branch", "ClassB", &classB, 32000, 0);
+   tree.Branch("ClassB_branch", "ClassB", &classB, 32000, splitlevel);
       
    // Fill tree
    for (Int_t i = 0; i < 100; ++i){
