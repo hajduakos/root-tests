@@ -12,25 +12,26 @@ simple_t simple; // An instance of the structure to generate the data
 
 void makeSimpleTreeOneBranch(){
    // Create a file for saving the tree
-   TFile *f = new TFile("simpleTreeOneBranch.root", "RECREATE");
+   TFile f("simpleTreeOneBranch.root", "RECREATE");
    // Create tree
-   TTree *tree = new TTree("SimpleTreeOneBranch", "Simple tree with one branch");
+   TTree tree("SimpleTreeOneBranch", "Simple tree with one branch");
    
    TRandom r; // Random number generator for filling the tree
    
    // One branch will contain each variable
-   tree->Branch("simple", &simple, "px/F:py/F:pz/F:ev/I");
+   tree.Branch("simple", &simple, "px/F:py/F:pz/F:ev/I");
    
    // Fill tree
    for (Int_t i = 0; i < 100; ++i){
       r.Rannor(simple.px, simple.py);
       simple.pz = simple.px*simple.px + simple.py*simple.py;
       simple.ev = i;
-      tree->Fill();
+      tree.Fill();
    }
    
    // Print some information about the tree
-   tree->Print();
+   tree.Print();
    // Write tree to file
-   f->Write();
+   f.Write();
+   f.Close();
 }

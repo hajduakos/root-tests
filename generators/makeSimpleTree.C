@@ -1,8 +1,8 @@
 void makeSimpleTree(){
    // Create a file for saving the tree
-   TFile *f = new TFile("simpleTree.root", "RECREATE");
+   TFile f("simpleTree.root", "RECREATE");
    // Create tree
-   TTree *tree = new TTree("SimpleTree", "Simple tree");
+   TTree tree("SimpleTree", "Simple tree");
    
    TRandom r; // Random number generator for filling the tree
    
@@ -12,11 +12,11 @@ void makeSimpleTree(){
    Int_t ev;
    
    // Each variable has a separate branch
-   tree->Branch("px",&px,"px/F");
-   tree->Branch("py",&py,"py/F");
-   tree->Branch("pz",&pz,"pz/F");
-   tree->Branch("random",&random,"random/D");
-   tree->Branch("ev",&ev,"ev/I");
+   tree.Branch("px",&px,"px/F");
+   tree.Branch("py",&py,"py/F");
+   tree.Branch("pz",&pz,"pz/F");
+   tree.Branch("random",&random,"random/D");
+   tree.Branch("ev",&ev,"ev/I");
       
    // Fill tree
    for (Int_t i = 0; i < 100; ++i){
@@ -24,11 +24,12 @@ void makeSimpleTree(){
      pz = px*px + py*py;
      random = gRandom->Rndm();
      ev = i;
-     tree->Fill();
+     tree.Fill();
    }
    
    // Print some information about the tree
-   tree->Print();
+   tree.Print();
    // Write tree to file
-   f->Write();
+   f.Write();
+   f.Close();
 }
