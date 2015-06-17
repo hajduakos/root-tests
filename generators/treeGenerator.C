@@ -166,7 +166,7 @@ void generateTreeClassWithArray(std::string const &name = "TreeClassWithArray") 
    
    ClassWithArray *classWithArray = new ClassWithArray(); // One instance to fill the tree
    
-   // Create branch for ClassCollections
+   // Create branch for ClassWithArray
    tree.Branch("ClassWithArray_branch", "ClassWithArray", &classWithArray, 32000, 99);
    
    // Fill tree
@@ -181,14 +181,38 @@ void generateTreeClassWithArray(std::string const &name = "TreeClassWithArray") 
    f.Write(); f.Close(); // Write tree to file
 }
 
+void generateTreeClassWithVector(std::string const &name = "TreeClassWithVector") {
+   TFile f((name + ".root").c_str(), "RECREATE"); // Create file
+   TTree tree(name.c_str(), "Tree with a class containing a vector"); // Create tree
+   
+   ClassWithVector *classWithVector = new ClassWithVector(); // One instance to fill the tree
+   
+   // Create branch for ClassWithVector
+   tree.Branch("ClassWithVector_branch", "ClassWithVector", &classWithVector, 32000, 99);
+   
+   // Fill tree
+   for (Int_t i = 0; i < 20; ++i) {
+      classWithVector->vec.clear();
+      for(Int_t j = 0; j < 10; ++j)
+         classWithVector->vec.push_back(i + j);
+   
+      tree.Fill();
+   }
+   
+   tree.Print(); // Print some information about the tree
+   f.Write(); f.Close(); // Write tree to file
+}
+
 void treeGenerator(){
    Info("TreeGenerator", "Generating trees");
    generateTree();
    generateTreeArray();
+   generateTreeVector();
    generateTreeStruct();
    generateTreeClass("TreeClass0", 0);
    generateTreeClass("TreeClass2", 2);
    generateTreeClassNested("TreeClassNested0", 0);
    generateTreeClassNested("TreeClassNested2", 2);
    generateTreeClassWithArray();
+   generateTreeClassWithVector();
 }

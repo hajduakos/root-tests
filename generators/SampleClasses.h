@@ -3,6 +3,7 @@
 #define Sample_classes
 
 #include "TObject.h"
+#include <vector>
 
 class ClassC : public TObject {
 private:
@@ -47,6 +48,16 @@ public:
    virtual ~ClassWithArray() { }
    
    ClassDef(ClassWithArray, 1);
+};
+
+class ClassWithVector : public TObject {
+public:
+   std::vector<Int_t> vec;
+   
+   ClassWithVector() { }
+   virtual ~ClassWithVector() { }
+   
+   ClassDef(ClassWithVector, 1);
 };
 
 #endif
