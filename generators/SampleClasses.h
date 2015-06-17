@@ -60,4 +60,27 @@ public:
    ClassDef(ClassWithVector, 1);
 };
 
+class Particle {
+public:
+   Particle() { }
+   double fPosX,fPosY,fPosZ;
+
+};
+
+class EventData {
+public:
+   std::vector<Particle> fParticles;
+   int fEventSize;
+
+   void SetSize() {
+      fEventSize = sizeof(EventData) + fParticles.size() * sizeof(Particle);
+   }
+   void Clear() {
+      fParticles.clear();
+   }
+   void AddParticle(const Particle& p) { fParticles.push_back(p); }
+
+   ClassDef(EventData,1);
+};
+
 #endif

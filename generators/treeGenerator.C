@@ -203,6 +203,36 @@ void generateTreeClassWithVector(std::string const &name = "TreeClassWithVector"
    f.Write(); f.Close(); // Write tree to file
 }
 
+void generateTreeEventTreeSimple(std::string const &name = "TreeEventTreeSimple") {
+   TFile f((name + ".root").c_str(), "RECREATE"); // Create file
+   TTree tree(name.c_str(), "Simplified version of the EventTree from the intro tutorial"); // Create tree
+   
+   
+   EventData *event = new EventData();
+   Particle p;
+   
+   tree.Branch("Event_branch", &event);
+   
+   for (Int_t i = 0; i < 20; ++i) {
+      event->Clear();
+      
+      int nParticles = 10;
+      for (Int_t ip = 0; ip < nParticles; ++ip) {
+         p.fPosX = gRandom->Gaus();
+         p.fPosY = gRandom->Gaus();
+         p.fPosZ = gRandom->Gaus();
+         event->AddParticle(p);
+      }
+      
+      event->SetSize();
+      
+      tree.Fill();
+   }
+
+   tree.Print(); // Print some information about the tree
+   f.Write(); f.Close(); // Write tree to file
+}
+
 void treeGenerator(){
    Info("TreeGenerator", "Generating trees");
    generateTree();
@@ -215,4 +245,5 @@ void treeGenerator(){
    generateTreeClassNested("TreeClassNested2", 2);
    generateTreeClassWithArray();
    generateTreeClassWithVector();
+   generateTreeEventTreeSimple();
 }
