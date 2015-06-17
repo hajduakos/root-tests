@@ -9,9 +9,9 @@ R__LOAD_LIBRARY(test/generators/SampleClasses_h.so)
 //   2) .L treeGenerator.C      Load macro
 //      generateTree("MyTree")  Generate trees independently
 
-void generateTree(std::string const &name = "Tree"){
+void generateTree(std::string const &name = "Tree") {
    TFile f((name + ".root").c_str(), "RECREATE"); // Create file
-   TTree tree(name.c_str(), "Simple tree with only leaf variables"); // Create tree
+   TTree tree(name.c_str(), "Tree with basic leaf variables"); // Create tree
       
    // Leaf variables
    Float_t px, py, pz;
@@ -26,8 +26,8 @@ void generateTree(std::string const &name = "Tree"){
    tree.Branch("ev",&ev,"ev/I");
       
    // Fill tree
-   for (Int_t i = 0; i < 100; ++i){
-      gRandom->Rannor(px,py);
+   for (Int_t i = 0; i < 100; ++i) {
+      gRandom->Rannor(px, py);
       pz = px*px + py*py;
       random = gRandom->Rndm();
       ev = i;
@@ -38,7 +38,7 @@ void generateTree(std::string const &name = "Tree"){
    f.Write(); f.Close(); // Write tree to file
 }
 
-void generateTreeArray(std::string const &name = "TreeArray"){
+void generateTreeArray(std::string const &name = "TreeArray") {
    TFile f((name + ".root").c_str(), "RECREATE"); // Create file
    TTree tree(name.c_str(), "Tree with a fixed size array"); // Create tree
       
@@ -49,7 +49,7 @@ void generateTreeArray(std::string const &name = "TreeArray"){
    tree.Branch("arr", arr, "arr[10]/F");
    
    // Fill tree
-   for (Int_t j = 0; j < 100; ++j){
+   for (Int_t j = 0; j < 100; ++j) {
       for(Int_t k = 0; k < 10; ++k)
          arr[k] = (Float_t)gRandom->Gaus();
       
@@ -60,9 +60,9 @@ void generateTreeArray(std::string const &name = "TreeArray"){
    f.Write(); f.Close(); // Write tree to file
 }
 
-void generateTreeVector(std::string const &name = "TreeVector"){
+void generateTreeVector(std::string const &name = "TreeVector") {
    TFile f((name + ".root").c_str(), "RECREATE"); // Create file
-   TTree tree(name.c_str(), "Tree with vectors"); // Create tree
+   TTree tree(name.c_str(), "Tree with a fixed size array"); // Create tree
       
    // Leaf variables
    std::vector<Float_t> vpx;
@@ -77,7 +77,7 @@ void generateTreeVector(std::string const &name = "TreeVector"){
       vpx.clear();
       vpy.clear();
       
-      for(Int_t k = 0; k < 10; ++k) {
+      for (Int_t k = 0; k < 10; ++k) {
          Float_t px, py;
          gRandom->Rannor(px, py);
          vpx.push_back(px);
@@ -91,7 +91,7 @@ void generateTreeVector(std::string const &name = "TreeVector"){
    f.Write(); f.Close(); // Write tree to file
 }
 
-void generateTreeVectorClass(std::string const &name = "TreeVectorClass"){
+void generateTreeVectorClass(std::string const &name = "TreeVectorClass") {
    TFile f((name + ".root").c_str(), "RECREATE"); // Create file
    TTree tree(name.c_str(), "Tree with a vector containing objects"); // Create tree
       
@@ -106,7 +106,7 @@ void generateTreeVectorClass(std::string const &name = "TreeVectorClass"){
    for (Int_t j = 0; j < 20; ++j) {
       vp.clear();
       
-      for(Int_t k = 0; k < 5; ++k) {
+      for (Int_t k = 0; k < 5; ++k) {
          p.fPosX = gRandom->Gaus();
          p.fPosY = gRandom->Gaus();
          p.fPosZ = gRandom->Gaus();
@@ -132,15 +132,15 @@ struct simple_t {
 
 simple_t simple; // An instance of the structure to generate the data
 
-void generateTreeStruct(std::string const &name = "TreeStruct"){
+void generateTreeStruct(std::string const &name = "TreeStruct") {
    TFile f((name + ".root").c_str(), "RECREATE"); // Create file
-   TTree tree(name.c_str(), "Tree from a C structure"); // Create tree
+   TTree tree(name.c_str(), "Tree from a C structure with basic variables"); // Create tree
       
    // A single branch contains all variables
    tree.Branch("simple", &simple, "px/F:py/F:pz/F:ev/I");
    
    // Fill tree
-   for (Int_t i = 0; i < 100; ++i){
+   for (Int_t i = 0; i < 100; ++i) {
       gRandom->Rannor(simple.px, simple.py);
       simple.pz = simple.px*simple.px + simple.py*simple.py;
       simple.ev = i;
@@ -161,7 +161,7 @@ void generateTreeClass(std::string const &name = "TreeClass", Int_t splitlevel =
    tree.Branch("ClassC_branch", "ClassC", &classC, 32000, splitlevel);
       
    // Fill tree
-   for (Int_t i = 0; i < 100; ++i){
+   for (Int_t i = 0; i < 100; ++i) {
       classC->Set((Float_t)gRandom->Gaus(), i);
       tree.Fill();
    }
@@ -180,7 +180,7 @@ void generateTreeClassNested(std::string const &name = "TreeClassNested", Int_t 
    tree.Branch("ClassB_branch", "ClassB", &classB, 32000, splitlevel);
       
    // Fill tree
-   for (Int_t i = 0; i < 100; ++i){
+   for (Int_t i = 0; i < 100; ++i) {
       classB->Set((Float_t)gRandom->Gaus(), i, (Float_t)gRandom->Gaus());
       tree.Fill();
    }
@@ -262,7 +262,7 @@ void generateTreeEventTreeSimple(std::string const &name = "TreeEventTreeSimple"
    f.Write(); f.Close(); // Write tree to file
 }
 
-void treeGenerator(){
+void treeGenerator() {
    Info("TreeGenerator", "Generating trees");
    generateTree();
    generateTreeArray();
