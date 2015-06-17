@@ -1,6 +1,7 @@
 R__LOAD_LIBRARY(test/generators/SampleClasses_h.so)
 #include "SampleClasses.h"
 #include <string>
+#include <vector>
 
 // This macro generates different types of trees.
 // It can be used in the following ways:
@@ -51,6 +52,37 @@ void generateTreeArray(std::string const &name = "TreeArray"){
    for (Int_t j = 0; j < 100; ++j){
       for(Int_t k = 0; k < 10; ++k)
          arr[k] = (Float_t)gRandom->Gaus();
+      
+      tree.Fill();
+   }
+   
+   tree.Print(); // Print some information about the tree
+   f.Write(); f.Close(); // Write tree to file
+}
+
+void generateTreeVector(std::string const &name = "TreeVector"){
+   TFile f((name + ".root").c_str(), "RECREATE"); // Create file
+   TTree tree(name.c_str(), "Tree with vectors"); // Create tree
+      
+   // Leaf variables
+   std::vector<Float_t> vpx;
+   std::vector<Float_t> vpy;
+   
+   // Each variable has a separate branch
+   tree.Branch("vpx", &vpx);
+   tree.Branch("vpy", &vpy);
+   
+   // Fill tree
+   for (Int_t j = 0; j < 100; ++j) {
+      vpx.clear();
+      vpy.clear();
+      
+      for(Int_t k = 0; k < 10; ++k) {
+         Float_t px, py;
+         gRandom->Rannor(px, py);
+         vpx.push_back(px);
+         vpy.push_back(py);
+      }
       
       tree.Fill();
    }
