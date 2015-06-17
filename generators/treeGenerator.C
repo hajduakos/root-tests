@@ -91,6 +91,35 @@ void generateTreeVector(std::string const &name = "TreeVector"){
    f.Write(); f.Close(); // Write tree to file
 }
 
+void generateTreeVectorClass(std::string const &name = "TreeVectorClass"){
+   TFile f((name + ".root").c_str(), "RECREATE"); // Create file
+   TTree tree(name.c_str(), "Tree with a vector containing objects"); // Create tree
+      
+   // Leaf variables
+   std::vector<Particle> vp;
+   Particle p;
+   
+   // Create branch
+   tree.Branch("vp", &vp);
+   
+   // Fill tree
+   for (Int_t j = 0; j < 20; ++j) {
+      vp.clear();
+      
+      for(Int_t k = 0; k < 5; ++k) {
+         p.fPosX = gRandom->Gaus();
+         p.fPosY = gRandom->Gaus();
+         p.fPosZ = gRandom->Gaus();
+         vp.push_back(p);
+      }
+      
+      tree.Fill();
+   }
+   
+   tree.Print(); // Print some information about the tree
+   f.Write(); f.Close(); // Write tree to file
+}
+
 // Simple structure to hold the data
 struct simple_t {
    Float_t px, py, pz;
@@ -167,7 +196,7 @@ void generateTreeClassWithArray(std::string const &name = "TreeClassWithArray") 
    ClassWithArray *classWithArray = new ClassWithArray(); // One instance to fill the tree
    
    // Create branch for ClassWithArray
-   tree.Branch("ClassWithArray_branch", "ClassWithArray", &classWithArray, 32000, 99);
+   tree.Branch("ClassWithArray_branch", &classWithArray);
    
    // Fill tree
    for (Int_t i = 0; i < 20; ++i) {
@@ -188,7 +217,7 @@ void generateTreeClassWithVector(std::string const &name = "TreeClassWithVector"
    ClassWithVector *classWithVector = new ClassWithVector(); // One instance to fill the tree
    
    // Create branch for ClassWithVector
-   tree.Branch("ClassWithVector_branch", "ClassWithVector", &classWithVector, 32000, 99);
+   tree.Branch("ClassWithVector_branch", &classWithVector);
    
    // Fill tree
    for (Int_t i = 0; i < 20; ++i) {
@@ -238,6 +267,7 @@ void treeGenerator(){
    generateTree();
    generateTreeArray();
    generateTreeVector();
+   generateTreeVectorClass();
    generateTreeStruct();
    generateTreeClass("TreeClass0", 0);
    generateTreeClass("TreeClass2", 2);
