@@ -33,10 +33,8 @@ void generateTree(std::string const &name = "Tree"){
       tree.Fill();
    }
    
-   // Print some information about the tree
-   tree.Print();
-   // Write tree to file
-   f.Write(); f.Close();
+   tree.Print(); // Print some information about the tree
+   f.Write(); f.Close(); // Write tree to file
 }
 
 void generateTreeArray(std::string const &name = "TreeArray"){
@@ -57,10 +55,8 @@ void generateTreeArray(std::string const &name = "TreeArray"){
       tree.Fill();
    }
    
-   // Print some information about the tree
-   tree.Print();
-   // Write tree to file
-   f.Write(); f.Close();
+   tree.Print(); // Print some information about the tree
+   f.Write(); f.Close(); // Write tree to file
 }
 
 // Simple structure to hold the data
@@ -90,10 +86,8 @@ void generateTreeStruct(std::string const &name = "TreeStruct"){
       tree.Fill();
    }
    
-   // Print some information about the tree
-   tree.Print();
-   // Write tree to file
-   f.Write(); f.Close();
+   tree.Print(); // Print some information about the tree
+   f.Write(); f.Close(); // Write tree to file
 }
 
 void generateTreeClass(std::string const &name = "TreeClass", Int_t splitlevel = 0) {
@@ -111,10 +105,8 @@ void generateTreeClass(std::string const &name = "TreeClass", Int_t splitlevel =
       tree.Fill();
    }
    
-   // Print some information about the tree
-   tree.Print();
-   // Write tree to file
-   f.Write(); f.Close();
+   tree.Print(); // Print some information about the tree
+   f.Write(); f.Close(); // Write tree to file
 }
 
 void generateTreeClassNested(std::string const &name = "TreeClassNested", Int_t splitlevel = 0) {
@@ -132,12 +124,30 @@ void generateTreeClassNested(std::string const &name = "TreeClassNested", Int_t 
       tree.Fill();
    }
    
-   // Print some information about the tree
-   tree.Print();
-   // Write tree to file
-   f.Write(); f.Close();
+   tree.Print(); // Print some information about the tree
+   f.Write(); f.Close(); // Write tree to file
 }
 
+void generateTreeClassWithArray(std::string const &name = "TreeClassWithArray") {
+   TFile f((name + ".root").c_str(), "RECREATE"); // Create file
+   TTree tree(name.c_str(), "Tree with a class containing an array"); // Create tree
+   
+   ClassWithArray *classWithArray = new ClassWithArray(); // One instance to fill the tree
+   
+   // Create branch for ClassCollections
+   tree.Branch("ClassWithArray_branch", "ClassWithArray", &classWithArray, 32000, 99);
+   
+   // Fill tree
+   for (Int_t i = 0; i < 20; ++i) {
+      for(Int_t j = 0; j < 10; ++j)
+         classWithArray->arr[j] = i + j;
+   
+      tree.Fill();
+   }
+   
+   tree.Print(); // Print some information about the tree
+   f.Write(); f.Close(); // Write tree to file
+}
 
 void treeGenerator(){
    Info("TreeGenerator", "Generating trees");
@@ -148,5 +158,5 @@ void treeGenerator(){
    generateTreeClass("TreeClass2", 2);
    generateTreeClassNested("TreeClassNested0", 0);
    generateTreeClassNested("TreeClassNested2", 2);
-   
+   generateTreeClassWithArray();
 }

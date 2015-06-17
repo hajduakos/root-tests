@@ -39,4 +39,14 @@ public:
    ClassDef(ClassB, 1);
 };
 
+class ClassWithArray : public TObject {
+public:
+   Int_t arr[10];
+   
+   ClassWithArray() { }
+   virtual ~ClassWithArray() { }
+   
+   ClassDef(ClassWithArray, 1);
+};
+
 #endif
