@@ -1,3 +1,4 @@
+// Build SampleClasses.h with the command '.L SampleClasses.h+'
 #ifndef Sample_classes
 #define Sample_classes
 
