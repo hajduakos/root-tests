@@ -2,6 +2,7 @@ R__LOAD_LIBRARY(test/generators/SampleClasses_h.so)
 #include "SampleClasses.h"
 #include <string>
 #include <vector>
+#include "TObjArray.h"
 
 // This macro generates different types of trees.
 // It can be used in the following ways:
@@ -114,6 +115,32 @@ void generateTreeVectorClass(std::string const &name = "TreeVectorClass") {
       }
       
       tree.Fill();
+   }
+   
+   tree.Print(); // Print some information about the tree
+   f.Write(); f.Close(); // Write tree to file
+}
+
+void generateTreeTObjArray(std::string const &name = "TreeTObjArray") {
+   TFile f((name + ".root").c_str(), "RECREATE"); // Create file
+   TTree tree(name.c_str(), "Tree with a TObjArray"); // Create tree
+   
+   // Leaf variables
+   TObjArray arr;
+   arr.SetOwner(kTRUE);
+   
+   // Create branch
+   tree.Branch("arr", &arr);
+   
+   // Fill tree
+   for (Int_t i = 0; i < 20; ++i) {
+      
+      for (Int_t j = 0; j < 5; ++j) 
+         arr.Add(new ClassC((Float_t)gRandom->Gaus(), i + j));
+      
+      tree.Fill();
+      
+      arr.Delete();
    }
    
    tree.Print(); // Print some information about the tree
@@ -268,6 +295,7 @@ void treeGenerator() {
    generateTreeArray();
    generateTreeVector();
    generateTreeVectorClass();
+   generateTreeTObjArray();
    generateTreeStruct();
    generateTreeClass("TreeClass0", 0);
    generateTreeClass("TreeClass2", 2);
