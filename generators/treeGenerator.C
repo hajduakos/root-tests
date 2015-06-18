@@ -283,7 +283,7 @@ void generateTreeClassWithVector(std::string const &name = "TreeClassWithVector"
    f.Write(); f.Close(); // Write tree to file
 }
 
-void generateTreeEventTreeSimple(std::string const &name = "TreeEventTreeSimple") {
+void generateTreeEventTreeSimple(std::string const &name = "TreeEventTreeSimple", Int_t splitlevel = 0) {
    TFile f((name + ".root").c_str(), "RECREATE"); // Create file
    TTree tree(name.c_str(), "Simplified version of the EventTree from the intro tutorial"); // Create tree
    
@@ -291,7 +291,7 @@ void generateTreeEventTreeSimple(std::string const &name = "TreeEventTreeSimple"
    EventData *event = new EventData();
    Particle p;
    
-   tree.Branch("Event_branch", &event);
+   tree.Branch("Event_branch", &event, 32000, splitlevel);
    
    for (Int_t i = 0; i < 20; ++i) {
       event->Clear();
@@ -330,5 +330,7 @@ void treeGenerator() {
    generateTreeClassNested("TreeClassNested2", 2);
    generateTreeClassWithArray();
    generateTreeClassWithVector();
-   generateTreeEventTreeSimple();
+   generateTreeEventTreeSimple("TreeEventTreeSimple0", 0);
+   generateTreeEventTreeSimple("TreeEventTreeSimple1", 1);
+   generateTreeEventTreeSimple("TreeEventTreeSimple2", 2);
 }
