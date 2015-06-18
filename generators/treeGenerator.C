@@ -3,6 +3,7 @@ R__LOAD_LIBRARY(test/generators/SampleClasses_h.so)
 #include <string>
 #include <vector>
 #include "TObjArray.h"
+#include "TClonesArray.h"
 
 // This macro generates different types of trees.
 // It can be used in the following ways:
@@ -139,8 +140,31 @@ void generateTreeTObjArray(std::string const &name = "TreeTObjArray") {
          arr.Add(new ClassC((Float_t)gRandom->Gaus(), i + j));
       
       tree.Fill();
+      arr.Delete(); // FIXME: can I delete the array after the tree was filled?
+   }
+   
+   tree.Print(); // Print some information about the tree
+   f.Write(); f.Close(); // Write tree to file
+}
+
+void generateTreeTClonesArray(std::string const &name = "TreeTClonesArray") {
+   TFile f((name + ".root").c_str(), "RECREATE"); // Create file
+   TTree tree(name.c_str(), "Tree with a TClonesArray"); // Create tree
+   
+   // Leaf variables
+   TClonesArray arr("ClassC", 5);
+   arr.SetOwner(kTRUE);   
+   
+   // Create branch
+   tree.Branch("arr", &arr);
+   
+   // Fill tree
+   for (Int_t i = 0; i < 20; ++i) {
+      for (Int_t j = 0; j < 5; ++j)
+         new (arr[j]) ClassC((Float_t)gRandom->Gaus(), i + j);
       
-      arr.Delete();
+      tree.Fill();
+      arr.Clear(); // FIXME: can I delete the array after the tree was filled?
    }
    
    tree.Print(); // Print some information about the tree
@@ -296,6 +320,7 @@ void treeGenerator() {
    generateTreeVector();
    generateTreeVectorClass();
    generateTreeTObjArray();
+   generateTreeTClonesArray();
    generateTreeStruct();
    generateTreeClass("TreeClass0", 0);
    generateTreeClass("TreeClass2", 2);
