@@ -93,7 +93,7 @@ void generateTreeVector(std::string const &name = "TreeVector") {
    f.Write(); f.Close(); // Write tree to file
 }
 
-void generateTreeVectorClass(std::string const &name = "TreeVectorClass") {
+void generateTreeVectorClass(std::string const &name = "TreeVectorClass", Int_t splitlevel = 0) {
    TFile f((name + ".root").c_str(), "RECREATE"); // Create file
    TTree tree(name.c_str(), "Tree with a vector containing objects"); // Create tree
       
@@ -102,7 +102,7 @@ void generateTreeVectorClass(std::string const &name = "TreeVectorClass") {
    Particle p;
    
    // Create branch
-   tree.Branch("vp", &vp);
+   tree.Branch("vp", &vp, 32000, splitlevel);
    
    // Fill tree
    for (Int_t j = 0; j < 20; ++j) {
@@ -147,7 +147,7 @@ void generateTreeTObjArray(std::string const &name = "TreeTObjArray") {
    f.Write(); f.Close(); // Write tree to file
 }
 
-void generateTreeTClonesArray(std::string const &name = "TreeTClonesArray") {
+void generateTreeTClonesArray(std::string const &name = "TreeTClonesArray", Int_t splitlevel = 0) {
    TFile f((name + ".root").c_str(), "RECREATE"); // Create file
    TTree tree(name.c_str(), "Tree with a TClonesArray"); // Create tree
    
@@ -156,7 +156,7 @@ void generateTreeTClonesArray(std::string const &name = "TreeTClonesArray") {
    arr.SetOwner(kTRUE);   
    
    // Create branch
-   tree.Branch("arr", &arr);
+   tree.Branch("arr", &arr, 32000, splitlevel);
    
    // Fill tree
    for (Int_t i = 0; i < 20; ++i) {
@@ -318,9 +318,11 @@ void treeGenerator() {
    generateTree();
    generateTreeArray();
    generateTreeVector();
-   generateTreeVectorClass();
+   generateTreeVectorClass("TreeVectorClass0", 0);
+   generateTreeVectorClass("TreeVectorClass2", 2);
    generateTreeTObjArray();
-   generateTreeTClonesArray();
+   generateTreeTClonesArray("TreeTClonesArray0", 0);
+   generateTreeTClonesArray("TreeTClonesArray2", 2);
    generateTreeStruct();
    generateTreeClass("TreeClass0", 0);
    generateTreeClass("TreeClass2", 2);
