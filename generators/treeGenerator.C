@@ -64,7 +64,7 @@ void generateTreeArray(std::string const &name = "TreeArray") {
 
 void generateTreeVector(std::string const &name = "TreeVector") {
    TFile f((name + ".root").c_str(), "RECREATE"); // Create file
-   TTree tree(name.c_str(), "Tree with a fixed size array"); // Create tree
+   TTree tree(name.c_str(), "Tree with vectors of built in types"); // Create tree
       
    // Leaf variables
    std::vector<Float_t> vpx;
