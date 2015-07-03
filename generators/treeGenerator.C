@@ -3,6 +3,8 @@ R__LOAD_LIBRARY(test/generators/SampleClasses_h.so)
 #include <string>
 #include <vector>
 #include <set>
+#include <list>
+#include <stack>
 #include "TObjArray.h"
 #include "TClonesArray.h"
 
@@ -130,19 +132,27 @@ void generateTreeContainers(std::string const &name = "TreeContainers") {
    // Leaf variables
    std::vector<Int_t> vi;
    std::set<Int_t> si;
+   std::list<Int_t> li;
+   std::stack<Int_t> sti;
    
    // Each variable has a separate branch
    tree.Branch("vectorBranch", &vi);
    tree.Branch("setBranch", &si);
+   tree.Branch("listBranch", &li);
+   tree.Branch("stackBranch", &sti);
    
    // Fill tree
    for (Int_t j = 0; j < 10; ++j) {
       vi.clear();
       si.clear();
+      li.clear();
+      while (!sti.empty()) sti.pop();
       
       for (Int_t k = 0; k < 10; ++k) {
          vi.push_back(k%2);
          si.insert(k%2);
+         li.push_back(k%2);
+         sti.push(k%2);
       }
       
       tree.Fill();
