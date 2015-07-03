@@ -2,6 +2,7 @@ R__LOAD_LIBRARY(test/generators/SampleClasses_h.so)
 #include "SampleClasses.h"
 #include <string>
 #include <vector>
+#include <set>
 #include "TObjArray.h"
 #include "TClonesArray.h"
 
@@ -113,6 +114,35 @@ void generateTreeVectorClass(std::string const &name = "TreeVectorClass", Int_t 
          p.fPosY = gRandom->Gaus();
          p.fPosZ = gRandom->Gaus();
          vp.push_back(p);
+      }
+      
+      tree.Fill();
+   }
+   
+   tree.Print(); // Print some information about the tree
+   f.Write(); f.Close(); // Write tree to file
+}
+
+void generateTreeContainers(std::string const &name = "TreeContainers") {
+   TFile f((name + ".root").c_str(), "RECREATE"); // Create file
+   TTree tree(name.c_str(), "Tree with containers of built in types"); // Create tree
+      
+   // Leaf variables
+   std::vector<Int_t> vi;
+   std::set<Int_t> si;
+   
+   // Each variable has a separate branch
+   tree.Branch("vectorBranch", &vi);
+   tree.Branch("setBranch", &si);
+   
+   // Fill tree
+   for (Int_t j = 0; j < 10; ++j) {
+      vi.clear();
+      si.clear();
+      
+      for (Int_t k = 0; k < 10; ++k) {
+         vi.push_back(k%2);
+         si.insert(k%2);
       }
       
       tree.Fill();
