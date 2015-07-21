@@ -412,6 +412,38 @@ void generateTreeNestedVector(std::string const &name = "TreeNestedVector") {
    f.Write(); f.Close(); // Write tree to file
 }
 
+void generateTreeNestedClones(std::string const &name = "TreeNestedClones") {
+   TFile f((name + ".root").c_str(), "RECREATE"); // Create file
+   TTree tree(name.c_str(), "Tree with a TClonesArray containing a class containing a TClonesArray"); // Create tree
+
+   // Leaf variables
+   TClonesArray arr("ClassWithClones", 5);
+   arr.SetOwner(kTRUE);
+
+   // Create branch
+   tree.Branch("arr", &arr, 32000, 99);
+
+   // Fill tree
+   for (Int_t i = 0; i < 20; ++i) {
+      for (Int_t j = 0; j < 5; ++j) {
+         new (arr[j]) ClassWithClones();
+         ClassWithClones *cwc = (ClassWithClones*)arr[j];
+         for (Int_t k = 0; k < 5; ++k) {
+            new (cwc->arr[k]) Particle();
+            Particle *p = (Particle*)cwc->arr[k];
+            p->fPosX = gRandom->Gaus();
+            p->fPosY = gRandom->Gaus();
+            p->fPosZ = gRandom->Gaus();
+         }
+      }
+      tree.Fill();
+      arr.Clear(); // FIXME: can I delete the array after the tree was filled?
+   }
+
+   tree.Print(); // Print some information about the tree
+   f.Write(); f.Close(); // Write tree to file
+}
+
 void treeGenerator() {
    Info("TreeGenerator", "Generating trees");
    generateTree();
