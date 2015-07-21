@@ -3,6 +3,7 @@
 #define Sample_classes
 
 #include "TObject.h"
+#include "TClonesArray.h"
 #include <vector>
 
 #ifdef __MAKECINT__
@@ -63,6 +64,15 @@ public:
    virtual ~ClassWithVector() { }
    
    ClassDef(ClassWithVector, 1);
+};
+
+class ClassWithClones : public TObject {
+public:
+   TClonesArray arr;
+
+   ClassWithClones() : arr("Particle", 5) { }
+
+   ClassDef(ClassWithClones, 1);
 };
 
 class Particle : public TObject {

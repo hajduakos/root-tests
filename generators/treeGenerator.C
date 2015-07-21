@@ -326,6 +326,33 @@ void generateTreeClassWithVector(std::string const &name = "TreeClassWithVector"
    f.Write(); f.Close(); // Write tree to file
 }
 
+void generateTreeClassWithClones(std::string const &name = "TreeClassWithClones") {
+   TFile f((name + ".root").c_str(), "RECREATE"); // Create file
+   TTree tree(name.c_str(), "Tree with a class containing a TClonesArray"); // Create tree
+
+   ClassWithClones *classWithClones = new ClassWithClones(); // One instance to fill the tree
+   classWithClones->arr.SetOwner(kTRUE);
+
+   // Create branch for ClassWithClones
+   tree.Branch("ClassWithClones_branch", &classWithClones, 32000, 99);
+
+   // Fill tree
+   for (Int_t i = 0; i < 20; ++i) {
+      classWithClones->arr.Clear();
+      for(Int_t j = 0; j < 5; ++j) {
+         new (classWithClones->arr[j]) Particle();
+         Particle *p = (Particle*)classWithClones->arr[j];
+         p->fPosX = gRandom->Gaus();
+         p->fPosY = gRandom->Gaus();
+         p->fPosZ = gRandom->Gaus();
+      }
+      tree.Fill();
+   }
+
+   tree.Print(); // Print some information about the tree
+   f.Write(); f.Close(); // Write tree to file
+}
+
 void generateTreeEventTreeSimple(std::string const &name = "TreeEventTreeSimple", Int_t splitlevel = 0) {
    TFile f((name + ".root").c_str(), "RECREATE"); // Create file
    TTree tree(name.c_str(), "Simplified version of the EventTree from the intro tutorial"); // Create tree
