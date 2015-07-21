@@ -72,10 +72,12 @@ void generateTreeVector(std::string const &name = "TreeVector") {
    // Leaf variables
    std::vector<Float_t> vpx;
    std::vector<Float_t> vpy;
+   std::vector<Bool_t> vb;
    
    // Each variable has a separate branch
    tree.Branch("vpx", &vpx);
    tree.Branch("vpy", &vpy);
+   tree.Branch("vb" , &vb );
    
    // Fill tree
    for (Int_t j = 0; j < 100; ++j) {
@@ -87,6 +89,7 @@ void generateTreeVector(std::string const &name = "TreeVector") {
          gRandom->Rannor(px, py);
          vpx.push_back(px);
          vpy.push_back(py);
+         vb.push_back((k * j % 2) == 0);
       }
       
       tree.Fill();
@@ -327,7 +330,6 @@ void generateTreeEventTreeSimple(std::string const &name = "TreeEventTreeSimple"
    TFile f((name + ".root").c_str(), "RECREATE"); // Create file
    TTree tree(name.c_str(), "Simplified version of the EventTree from the intro tutorial"); // Create tree
    
-   
    EventData *event = new EventData();
    Particle p;
    
@@ -353,6 +355,36 @@ void generateTreeEventTreeSimple(std::string const &name = "TreeEventTreeSimple"
    f.Write(); f.Close(); // Write tree to file
 }
 
+void generateTreeNestedVector(std::string const &name = "TreeNestedVector") {
+   TFile f((name + ".root").c_str(), "RECREATE"); // Create file
+   TTree tree(name.c_str(), "Tree with a vector of a class containing a vector"); // Create tree
+
+   std::vector<EventData> vec;
+   
+   // Create branch for ClassWithVector
+   tree.Branch("vec_branch", &vec, 32000, 99);
+   
+   // Fill tree
+   for (Int_t i = 0; i < 20; ++i) {
+      vec.clear();
+      for(Int_t j = 0; j < 10; ++j) {
+         EventData ed;
+         Particle p;
+         for (Int_t ip = 0; ip < 10; ++ip) {
+            p.fPosX = gRandom->Gaus();
+            p.fPosY = gRandom->Gaus();
+            p.fPosZ = gRandom->Gaus();
+            ed.AddParticle(p);
+         }
+         vec.push_back(ed);
+      }
+      tree.Fill();
+   }
+   
+   tree.Print(); // Print some information about the tree
+   f.Write(); f.Close(); // Write tree to file
+}
+
 void treeGenerator() {
    Info("TreeGenerator", "Generating trees");
    generateTree();
@@ -360,6 +392,7 @@ void treeGenerator() {
    generateTreeVector();
    generateTreeVectorClass("TreeVectorClass0", 0);
    generateTreeVectorClass("TreeVectorClass2", 2);
+   generateTreeContainers();
    generateTreeTObjArray();
    generateTreeTClonesArray("TreeTClonesArray0", 0);
    generateTreeTClonesArray("TreeTClonesArray2", 2);
@@ -367,6 +400,7 @@ void treeGenerator() {
    generateTreeClass("TreeClass0", 0);
    generateTreeClass("TreeClass2", 2);
    generateTreeClassNested("TreeClassNested0", 0);
+   generateTreeClassNested("TreeClassNested1", 1);
    generateTreeClassNested("TreeClassNested2", 2);
    generateTreeClassWithArray();
    generateTreeClassWithVector();

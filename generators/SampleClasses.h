@@ -5,6 +5,11 @@
 #include "TObject.h"
 #include <vector>
 
+#ifdef __MAKECINT__
+#pragma link C++ class vector<EventData>+;
+#pragma link C++ class vector<Particle>+;
+#endif
+
 class ClassC : public TObject {
 private:
    Float_t fPx;
@@ -60,14 +65,15 @@ public:
    ClassDef(ClassWithVector, 1);
 };
 
-class Particle {
+class Particle : public TObject {
 public:
    Particle() { }
    double fPosX,fPosY,fPosZ;
 
+   ClassDef(Particle,1);
 };
 
-class EventData {
+class EventData : public TObject {
 public:
    std::vector<Particle> fParticles;
    int fEventSize;
