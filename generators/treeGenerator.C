@@ -446,24 +446,29 @@ void generateTreeNestedClones(std::string const &name = "TreeNestedClones") {
 
 void treeGenerator() {
    Info("TreeGenerator", "Generating trees");
-   generateTree();
-   generateTreeArray();
-   generateTreeVector();
-   generateTreeVectorClass("TreeVectorClass0", 0);
-   generateTreeVectorClass("TreeVectorClass2", 2);
-   generateTreeContainers();
-   generateTreeTObjArray();
-   generateTreeTClonesArray("TreeTClonesArray0", 0);
-   generateTreeTClonesArray("TreeTClonesArray2", 2);
-   generateTreeStruct();
-   generateTreeClass("TreeClass0", 0);
-   generateTreeClass("TreeClass2", 2);
-   generateTreeClassNested("TreeClassNested0", 0);
-   generateTreeClassNested("TreeClassNested1", 1);
-   generateTreeClassNested("TreeClassNested2", 2);
-   generateTreeClassWithArray();
-   generateTreeClassWithVector();
-   generateTreeEventTreeSimple("TreeEventTreeSimple0", 0);
-   generateTreeEventTreeSimple("TreeEventTreeSimple1", 1);
-   generateTreeEventTreeSimple("TreeEventTreeSimple2", 2);
+   /* ID     NAME                                     */
+   /* ----------------------------------------------- */
+   /*  1 */ generateTree();
+   /*  2 */ generateTreeArray();
+   /*  3 */ generateTreeVector();
+   /*  4 */ generateTreeVectorClass("TreeVectorClass0", 0);
+   /*  5 */ generateTreeVectorClass("TreeVectorClass2", 2);
+   /*  6 */ generateTreeContainers();
+   /*  7 */ generateTreeTObjArray();
+   /*  8 */ generateTreeTClonesArray("TreeTClonesArray0", 0);
+   /*  9 */ generateTreeTClonesArray("TreeTClonesArray2", 2);
+   /* 10 */ generateTreeStruct();
+   /* 11 */ generateTreeClass("TreeClass0", 0);
+   /* 12 */ generateTreeClass("TreeClass2", 2);
+   /* 13 */ generateTreeClassNested("TreeClassNested0", 0);
+   /* 14 */ generateTreeClassNested("TreeClassNested1", 1);
+   /* 15 */ generateTreeClassNested("TreeClassNested2", 2);
+   /* 16 */ generateTreeClassWithArray();
+   /* 17 */ generateTreeClassWithVector();
+   /* 18 */ generateTreeClassWithClones();
+   /* 19 */ generateTreeEventTreeSimple("TreeEventTreeSimple0", 0);
+   /* 20 */ generateTreeEventTreeSimple("TreeEventTreeSimple1", 1);
+   /* 21 */ generateTreeEventTreeSimple("TreeEventTreeSimple2", 2);
+   /* 22 */ generateTreeNestedVector();
+   /* 23 */ generateTreeNestedClones();
 }
