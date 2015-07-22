@@ -9,6 +9,7 @@
 #ifdef __MAKECINT__
 #pragma link C++ class vector<EventData>+;
 #pragma link C++ class vector<Particle>+;
+#pragma link C++ class vector<ClassWithArray>+;
 #endif
 
 class ClassC : public TObject {
