@@ -444,6 +444,29 @@ void generateTreeNestedClones(std::string const &name = "TreeNestedClones") {
    f.Write(); f.Close(); // Write tree to file
 }
 
+void generateTreeNestedArray(std::string const &name = "TreeNestedArray") {
+   TFile f((name + ".root").c_str(), "RECREATE"); // Create file
+   TTree tree(name.c_str(), "Tree with an array containing a class containing an array"); // Create tree
+
+   // Leaf variables
+   ClassWithArray arr[10];
+
+   // Each variable has a separate branch
+   tree.Branch("outer_array", arr, 32000, 99);
+
+   // Fill tree
+   for (Int_t i = 0; i < 20; ++i) {
+      for (Int_t j = 0; j < 10; ++j)
+         for(Int_t k = 0; k < 10; ++k)
+            arr[j].arr[k] = i + j + k;
+
+      tree.Fill();
+   }
+
+   tree.Print(); // Print some information about the tree
+   f.Write(); f.Close(); // Write tree to file
+}
+
 void treeGenerator() {
    Info("TreeGenerator", "Generating trees");
    /* ID     NAME                                     */
@@ -471,4 +494,5 @@ void treeGenerator() {
    /* 21 */ generateTreeEventTreeSimple("TreeEventTreeSimple2", 2);
    /* 22 */ generateTreeNestedVector();
    /* 23 */ generateTreeNestedClones();
+   /* 24 */ generateTreeNestedArray();
 }
