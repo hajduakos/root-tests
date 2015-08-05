@@ -60,6 +60,7 @@ public:
 class ClassWithVector : public TObject {
 public:
    std::vector<Int_t> vec;
+   std::vector<Bool_t> vecBool;
    
    ClassWithVector() { }
    virtual ~ClassWithVector() { }
@@ -92,7 +93,7 @@ public:
    void SetSize() {
       fEventSize = sizeof(EventData) + fParticles.size() * sizeof(Particle);
    }
-   void Clear() {
+   void Clear(const char* = "") {
       fParticles.clear();
    }
    void AddParticle(const Particle& p) { fParticles.push_back(p); }

@@ -75,18 +75,19 @@ void generateTreeVector(std::string const &name = "TreeVector") {
    std::vector<Bool_t> vb;
 
    // Each variable has a separate branch
-   tree.Branch("vpx", &vpx);
-   tree.Branch("vpy", &vpy);
+   //tree.Branch("vpx", &vpx);
+   //tree.Branch("vpy", &vpy);
    tree.Branch("vb" , &vb );
 
    // Fill tree
-   for (Int_t j = 0; j < 100; ++j) {
+   for (Int_t j = 1; j < 10; ++j) {
       vpx.clear();
       vpy.clear();
+      vb.clear();
 
-      for (Int_t k = 0; k < 10; ++k) {
-         Float_t px, py;
-         gRandom->Rannor(px, py);
+      for (Int_t k = 0; k < j; ++k) {
+         Float_t px = k, py = k + 10;
+         //gRandom->Rannor(px, py);
          vpx.push_back(px);
          vpy.push_back(py);
          vb.push_back((k * j % 2) == 0);
@@ -316,8 +317,10 @@ void generateTreeClassWithVector(std::string const &name = "TreeClassWithVector"
    // Fill tree
    for (Int_t i = 0; i < 20; ++i) {
       classWithVector->vec.clear();
-      for(Int_t j = 0; j < 10; ++j)
+      for(Int_t j = 0; j < 10; ++j) {
          classWithVector->vec.push_back(i + j);
+         classWithVector->vecBool.push_back(i % 2);
+      }
 
       tree.Fill();
    }
