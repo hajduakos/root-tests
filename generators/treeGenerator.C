@@ -265,6 +265,28 @@ void generateTreeClass(std::string const &name = "TreeClass", Int_t splitlevel =
    f.Write(); f.Close(); // Write tree to file
 }
 
+void generateTreeDuplicateName(std::string const &name = "TreeDuplicateName") {
+   TFile f((name + ".root").c_str(), "RECREATE"); // Create file
+   TTree tree(name.c_str(), "Tree from a class with duplicate names"); // Create tree
+
+   ClassC *classC1 = new ClassC(); // One instance to fill the tree
+   ClassC *classC2 = new ClassC(); // One instance to fill the tree
+
+   // Create branch for ClassC
+   tree.Branch("C1", "ClassC", &classC1, 32000, 99);
+   tree.Branch("C2", "ClassC", &classC2, 32000, 99);
+
+   // Fill tree
+   for (Int_t i = 0; i < 100; ++i) {
+      classC1->Set((Float_t)gRandom->Gaus(), i);
+      classC2->Set((Float_t)gRandom->Gaus(), i);
+      tree.Fill();
+   }
+
+   tree.Print(); // Print some information about the tree
+   f.Write(); f.Close(); // Write tree to file
+}
+
 void generateTreeClassNested(std::string const &name = "TreeClassNested", Int_t splitlevel = 0) {
    TFile f((name + ".root").c_str(), "RECREATE"); // Create file
    TTree tree(name.c_str(), "Tree with nested classes"); // Create tree
@@ -502,4 +524,5 @@ void treeGenerator() {
    /* 22 */ generateTreeNestedVector();
    /* 23 */ generateTreeNestedClones();
    /* 24 */ generateTreeNestedArray();
+   /* 25 */ generateTreeDuplicateName();
 }
