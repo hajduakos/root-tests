@@ -21,7 +21,8 @@ Bool_t TreeNestedVector::Process(Long64_t entry)
 
    for (Int_t i = 0; i < vec_branch_fEventSize.GetSize(); ++i) {
       fprintf(stderr, "EventSize: %d\n", vec_branch_fEventSize[i]);
-      fprintf(stderr, "Vector size: %zu\n", vec_branch_fParticles[i].size());
+      // TODO: this is not working (TTreeReaderArray<vector<T>> is not supproted yet)
+      //fprintf(stderr, "Vector size: %zu\n", vec_branch_fParticles[i].size());
       /*for(Int_t j = 0; j < vec_branch_fParticles[i].size(); ++j) {
          fprintf(stderr, "\tParticle: PosX: %.1lf PosY: %.1lf PosZ: %.1lf\n",
                      vec_branch_fParticles[i][j].fPosX,

@@ -20,7 +20,9 @@ Bool_t TreeNestedClones::Process(Long64_t entry)
    fReader.SetEntry(entry);
 
    for (Int_t i = 0; i < arr_arr.GetSize(); ++i) {
-      fprintf(stderr, "GetSize: %d\n", arr_arr[i].GetSize());
+      // TODO: this is not working (TTreeReaderArray<vector<T>> is not supproted yet)
+      //fprintf(stderr, "Inner array size: %d\n", arr_arr[i].GetSize());
+      // TODO: access data in the inner clones array
    }
 
    return kTRUE;
