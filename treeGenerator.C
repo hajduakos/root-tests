@@ -1,4 +1,4 @@
-R__LOAD_LIBRARY(test/generators/SampleClasses_h.so)
+R__LOAD_LIBRARY(test/SampleClasses_h.so)
 #include "SampleClasses.h"
 #include <string>
 #include <vector>
