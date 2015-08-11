@@ -1,32 +1,20 @@
+#define TreeEventTreeSimple2_cxx
+
 #include "../generated_selectors/TreeEventTreeSimple2.h"
-#include "../generated_selectors/TreeEventTreeSimple2.C"
 #include <TH2.h>
 #include <TStyle.h>
 
-class TreeEventTreeSimple2_filled : public TreeEventTreeSimple2{
-public:
-   TreeEventTreeSimple2_filled(TTree * /*tree*/ =0) : TreeEventTreeSimple2(0) { }
-
-   virtual void    Begin(TTree *tree);
-   virtual void    SlaveBegin(TTree *tree);
-   virtual Bool_t  Process(Long64_t entry);
-   virtual void    SlaveTerminate();
-   virtual void    Terminate();
-
-   ClassDef(TreeEventTreeSimple2_filled, 0);
-};
-
-void TreeEventTreeSimple2_filled::Begin(TTree * /*tree*/)
+void TreeEventTreeSimple2::Begin(TTree * /*tree*/)
 {
    TString option = GetOption();
 }
 
-void TreeEventTreeSimple2_filled::SlaveBegin(TTree * /*tree*/)
+void TreeEventTreeSimple2::SlaveBegin(TTree * /*tree*/)
 {
    TString option = GetOption();
 }
 
-Bool_t TreeEventTreeSimple2_filled::Process(Long64_t entry)
+Bool_t TreeEventTreeSimple2::Process(Long64_t entry)
 {
    fReader.SetEntry(entry);
 
@@ -50,6 +38,6 @@ Bool_t TreeEventTreeSimple2_filled::Process(Long64_t entry)
    return kTRUE;
 }
 
-void TreeEventTreeSimple2_filled::SlaveTerminate() { }
+void TreeEventTreeSimple2::SlaveTerminate() { }
 
-void TreeEventTreeSimple2_filled::Terminate() { }
+void TreeEventTreeSimple2::Terminate() { }

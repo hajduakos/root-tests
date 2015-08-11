@@ -128,7 +128,7 @@ void testClasses() {
       gSystem->cd("./generated_selectors");               // Go to gen. folder
       t->MakeSelector();                                  // Generate selector
       gSystem->cd("..");                                  // Go back
-      t->Process(("./test_selectors/" + treeName + "_filled.C").c_str()); // Run (pre-filled) selector
+      t->Process(("./test_selectors/" + treeName + ".C").c_str()); // Run (pre-filled) selector
    }
    gSystem->cd(dirSaved); // Restore working directory
 }
