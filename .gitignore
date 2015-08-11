@@ -2,3 +2,4 @@
 *.so
 *.pcm
 selectors/
+generators/generated_selectors
