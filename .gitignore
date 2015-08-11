@@ -1,4 +1,4 @@
 *.d
 *.so
 *.pcm
-./generated_selectors
+generated_selectors/
