@@ -73,15 +73,13 @@ void testSimple() {
 
    // Loop through test trees
    std::vector<std::string> trees = {"Tree", "TreeStruct"};
-   for (std::string tree : trees)
+   for (std::string treeName : trees)
    {
-      fprintf(stderr, "Testing tree %s\n", tree.c_str());
-      TFile f((tree + ".root").c_str());      // Load file
-      TTree *t = (TTree*)f.Get(tree.c_str()); // Load tree
-      t->MakeSelector();                      // Generate selector
-      gSystem->CopyFile(                      // Overwrite implementation
-         (tree + ".C_filled").c_str(), (tree + ".C").c_str(), true);
-      t->Process((tree + ".C").c_str());      // Run selector
+      fprintf(stderr, "Testing tree %s\n", treeName.c_str());
+      TFile f((treeName + ".root").c_str());        // Load file
+      TTree *t = (TTree*)f.Get(treeName.c_str());   // Load tree
+      t->MakeSelector();                            // Generate selector
+      t->Process((treeName + "_filled.C").c_str()); // Run (pre-filled) selector
    }
    gSystem->cd(dirSaved); // Restore working directory
 }
