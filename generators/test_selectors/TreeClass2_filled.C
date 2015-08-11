@@ -1,5 +1,5 @@
-#include "TreeClass2.h"
-#include "TreeClass2.C"
+#include "../generated_selectors/TreeClass2.h"
+#include "../generated_selectors/TreeClass2.C"
 #include <TH2.h>
 #include <TStyle.h>
 

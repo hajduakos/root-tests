@@ -1,5 +1,5 @@
-#include "TreeArray.h"
-#include "TreeArray.C"
+#include "../generated_selectors/TreeArray.h"
+#include "../generated_selectors/TreeArray.C"
 #include <TH2.h>
 #include <TStyle.h>
 

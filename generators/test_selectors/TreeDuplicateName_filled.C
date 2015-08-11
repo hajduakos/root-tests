@@ -1,5 +1,5 @@
-#include "TreeDuplicateName.h"
-#include "TreeDuplicateName.C"
+#include "../generated_selectors/TreeDuplicateName.h"
+#include "../generated_selectors/TreeDuplicateName.C"
 #include <TH2.h>
 #include <TStyle.h>
 

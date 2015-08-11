@@ -1,5 +1,5 @@
-#include "TreeClassNested1.h"
-#include "TreeClassNested1.C"
+#include "../generated_selectors/TreeClassNested1.h"
+#include "../generated_selectors/TreeClassNested1.C"
 #include <TH2.h>
 #include <TStyle.h>
 

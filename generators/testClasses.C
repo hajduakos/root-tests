@@ -107,7 +107,6 @@ void generateAll() {
 // 'selector.C_filled')
 void testClasses() {
    const char *dirSaved = gSystem->pwd(); // Save working directory
-   gSystem->cd("./trees"); // Go to trees
 
    // Loop through test trees
    std::vector<std::string> trees = {"TreeClass0",
@@ -123,10 +122,13 @@ void testClasses() {
    for (std::string treeName : trees)
    {
       fprintf(stderr, "Testing tree %s\n", treeName.c_str());
-      TFile f((treeName + ".root").c_str());        // Load file
-      TTree *t = (TTree*)f.Get(treeName.c_str());   // Load tree
-      t->MakeSelector();                            // Generate selector
-      t->Process((treeName + "_filled.C").c_str()); // Run (pre-filled) selector
+
+      TFile f(("./trees/" + treeName + ".root").c_str()); // Load file
+      TTree *t = (TTree*)f.Get(treeName.c_str());         // Load tree
+      gSystem->cd("./generated_selectors");               // Go to gen. folder
+      t->MakeSelector();                                  // Generate selector
+      gSystem->cd("..");                                  // Go back
+      t->Process(("./test_selectors/" + treeName + "_filled.C").c_str()); // Run (pre-filled) selector
    }
    gSystem->cd(dirSaved); // Restore working directory
 }

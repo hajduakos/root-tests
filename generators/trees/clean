@@ -1,2 +1,0 @@
-shopt -s extglob
-rm  !(*.root|*_filled.C|clean)

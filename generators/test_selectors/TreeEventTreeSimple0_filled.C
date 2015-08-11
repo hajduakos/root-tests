@@ -1,5 +1,5 @@
-#include "TreeEventTreeSimple0.h"
-#include "TreeEventTreeSimple0.C"
+#include "../generated_selectors/TreeEventTreeSimple0.h"
+#include "../generated_selectors/TreeEventTreeSimple0.C"
 #include <TH2.h>
 #include <TStyle.h>
 
