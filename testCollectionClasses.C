@@ -1,3 +1,4 @@
+// SampleClasses.h can be built in ROOT by '.L SampleClasses.h+'
 R__LOAD_LIBRARY(SampleClasses_h.so)
 #include "SampleClasses.h"
 #include <string>
@@ -217,7 +218,7 @@ void testCollectionClasses() {
    // Loop through test trees
    std::vector<std::string> trees = {"TreeVectorClass0",
                                      "TreeVectorClass2",
-                                     //"TreeClassWithArray", // Known failure
+                                     "TreeClassWithArray",
                                      "TreeClassWithVector",
                                      "TreeClassWithClones",
                                      //"TreeNestedVector", // Known failure
